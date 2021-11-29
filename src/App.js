@@ -2,6 +2,7 @@ import React, {Fragment, useState , useEffect} from 'react';
 import Header from './components/Header';
 import Form from './components/Form';
 import Climate from './components/Climate';
+import Error from './components/Error';
 
 
 
@@ -11,11 +12,13 @@ function App() {
     city:'',
     country:''
   });
-
-  const {city , country} = search;
-
+  
   const [ query, keepQuery] = useState(false);
   const [ result , keepResult] = useState({});
+  const [ error , keepError] = useState(false); 
+  
+  const {city , country} = search;
+
   
   //useEffect detecta los cambios en las dependencias, para que no estemos todo el tiempo consultando la api 
   useEffect(() => {
@@ -29,11 +32,28 @@ function App() {
 
         keepResult(result);
         keepQuery(false); // Para poder hacer multiples consultas
+
+        //Detecta si hubo resultados correctos en la consulta
+        if(result.cod === "404"){
+          keepError(true);
+        } else {
+          keepError(false); 
+        }
       }
     }
-
     queryAPI();
   },[query]);
+
+  let components;
+  if (error) {
+    components = <Error mensaje="No results" />
+  } else {
+    components =  <Climate
+                    result = {result}
+                  />
+  }
+
+  
   
   return (
     <Fragment>
