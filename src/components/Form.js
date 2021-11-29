@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 
-const Form = () => {
+const Form = ({search, keepSearch, keepQuery}) => {
     
-    const [ search, keepSearch ] = useState({
-        city:'',
-        country:''
-    });
+    
+
+    const [error, keepError] = useState(false); 
 
     const { city , country} = search; 
 
@@ -16,18 +15,35 @@ const Form = () => {
             [e.target.name] : e.target.value
         });
     }
-    
+    //Cuando el usuario envie la información, verificar si no esta vacia
+    const handleSubmit = e => {
+        e.preventDefault();
+
+        //validar
+        if(city.trim() === ''  || country.trim() === ''){
+            keepError(true);
+            return; 
+        }
+
+        keepError(false);
+
+        //Pasar al componente
+        keepQuery(true);
+    }
     
     return (  
-        <form>
+        <form
+            onSubmit = {handleSubmit}
+        >
+            {error ? <p className ="red darken-4 error">Please fill all fields</p> : null}
             <div className="input-field col s12">
                 <input
                     type="text"
                     name="city"
                     id="city"
                     value={city}
-                    onClick={handleChange}
-                    />
+                    onChange={handleChange}
+                />
                 <label htmlFor="city">City: </label>
             </div>
 
@@ -36,7 +52,7 @@ const Form = () => {
                     name="country"
                     id="country"
                     value={country}
-                    onClick={handleChange}
+                    onChange={handleChange}
                 >
                     <option value="">-- Select country --</option>
                     <option value="US">Estados Unidos</option>
@@ -48,6 +64,13 @@ const Form = () => {
                     <option value="PE">Perú</option>
                 </select>
                 <label htmlFor="country">Country: </label>
+            </div>
+
+            <div className="input-field col s12">
+                <button
+                    type="submit"
+                    className="waves-effect waves-light btn-large btn-block yellow accent-4 col s12"
+                >Buscar Clima</button>
             </div>
         </form>
     );

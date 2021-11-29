@@ -7,11 +7,14 @@ nav .brand-logo {
   display: block;
   text-align: center;
   position: relative;
+  color: white;
+  font-weight: bold;
 
  
 }
 .input-field label {
-  color: white;
+  color: rgb(255, 255, 255);
+  font-weight: bolder;
 }
 
 .input-field input[type=text]:focus + label {
@@ -38,7 +41,7 @@ input[type=text]:not(.browser-default):focus:not([readonly]) + label {
 
 .contenedor-form {
   padding: 3rem 0 1px 0;
-  background-color: #03a9f4;
+  background-color: #76b5da;
 }
 .mensaje {
   text-align: center;
