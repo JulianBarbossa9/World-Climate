@@ -42,6 +42,11 @@ function App() {
       }
     }
     queryAPI();
+
+    /**
+     * Quitar errores de dependencia
+     */
+    // eslint-disable-next-line
   },[query]);
 
   let components;
